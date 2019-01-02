@@ -1,0 +1,7 @@
+.cryptocurrency-item{
+  padding: 10px;
+}
+
+.cryptocurrency-item:hover {
+  background-color: #f1f3f5;
+}
