@@ -15,6 +15,7 @@ const Title = styled.span`
 `
 
 export class CryptoCurrencyDrawer extends Component {
+
   render() {
     return (
       <Drawer
@@ -30,9 +31,10 @@ export class CryptoCurrencyDrawer extends Component {
           </Title>
         </CoinInfo>
         <Divider />
-        <Exchanges>
-          
-        </Exchanges>
+        <Exchanges 
+          loading={this.props.exchangesLoading} 
+          exchanges={this.props.exchanges}
+          onClick={this.props.onOpenExchange}/>
       </Drawer>
     );
   }

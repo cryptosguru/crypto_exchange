@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { getTopListBy24Hours } from '../../services/crypto/crypto-service';
+import { getTopListBy24Hours, getCryptoInfoAndExchanges } from '../../services/crypto/crypto-service';
 import { List, Avatar, Button } from 'antd';
 import styled from 'styled-components';
 import './prices.css';
@@ -34,7 +34,9 @@ export class Prices extends Component {
       page: 0 
     },
     activeCoin: {},
-    drawerVisible: false
+    drawerVisible: false,
+    exchangesLoading: false,
+    exchanges: []
   };
 
   componentWillMount() {
@@ -58,24 +60,33 @@ export class Prices extends Component {
     setTimeout(() => this.search(), 0);
   }
   
-  itemClicked(item) {
+  async itemClicked(item) {
     this.setState({
       drawerVisible: true,
       activeCoin: item,
-      onClose: () => this.closeDrawer()
+      onClose: () => this.closeDrawer(),
+      exchangesLoading: true
     });
+    console.log(item);
+    const data = await getCryptoInfoAndExchanges(item.name, 'USD', 10);
+    this.setState({
+      exchangesLoading: false,
+      exchanges: data.Exchanges
+    })
+    console.log(data);
   }
   
   closeDrawer() {
     this.setState({
       drawerVisible: false,
-      activeCoin: {}
+      activeCoin: {},
+      exchanges: []
     });
   }
 
   renderItem(item) {
     return (
-      <List.Item key={item.id} className="cryptocurrency-item" item={item}  onClick={() => this.itemClicked(item)}>
+      <List.Item key={item.id} className="cryptocurrency-item" item={item} onClick={() => this.itemClicked(item)}>
        <List.Item.Meta
           avatar={<Avatar src={item.imageUrl} />}
           title={<a href={item.href}>{item.displayName}</a>}
@@ -100,9 +111,11 @@ export class Prices extends Component {
       <div>
         <CryptoCurrencyDrawer visible={this.state.drawerVisible} 
           cryptocurrencyInfo={this.state.activeCoin} 
-          onClose={() => this.closeDrawer()}>
-
-        </CryptoCurrencyDrawer>
+          onClose={() => this.closeDrawer()}
+          exchangesLoading={this.state.exchangesLoading}
+          exchanges={this.state.exchanges}
+          onOpenExchange={console.log}
+        />
         <ListWrapper>
           <List
             loadMore={this.loadMore()}
