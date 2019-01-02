@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { getTopListBy24Hours } from '../../services/crypto/crypto-service';
-import { List, Avatar } from 'antd';
+import { List, Avatar, Button } from 'antd';
 import styled from 'styled-components';
 import './prices.css';
+import { CryptoCurrencyDrawer } from "./components/drawer/CryptocurrencyDrawer";
 
 const ListWrapper = styled.div`
   width: 70%;
@@ -16,29 +17,69 @@ const Price = styled.div`
   user-select: none;
 `
 
+const StyledLoadMore = styled.div`
+  text-align: center;
+  margin-top: 12px;
+  height: 32px;
+  line-height: 32px;
+`
+
 export class Prices extends Component {
-  state = { cryptos: [], loading: false, tableLength: 10};
+  state = { 
+    cryptos: [], 
+    loading: false, 
+    searchInfo: {
+      limit: 10,
+      symbol: 'USD',
+      page: 0 
+    },
+    activeCoin: {},
+    drawerVisible: false
+  };
 
   componentWillMount() {
-    this.setState({ loading: true })
-    getTopListBy24Hours().then(cryptos => {
-      this.setState({ cryptos, loading: false});
+    this.search();
+  }
+
+  search() {
+    this.setState({ loading: true });
+    getTopListBy24Hours(this.state.searchInfo).then(cryptos => {
+      this.setState({ cryptos: this.state.cryptos.concat(cryptos), loading: false});
     })
   }
 
+  onLoadMore() {
+    this.setState({
+      searchInfo: {
+        ...this.state.searchInfo,
+        page: this.state.searchInfo.page + 1
+      }
+    });
+    setTimeout(() => this.search(), 0);
+  }
+  
   itemClicked(item) {
-    return _event => {
-      console.log(item);
-    }
+    this.setState({
+      drawerVisible: true,
+      activeCoin: item,
+      onClose: () => this.closeDrawer()
+    });
+  }
+  
+  closeDrawer() {
+    this.setState({
+      drawerVisible: false,
+      activeCoin: {}
+    });
   }
 
   renderItem(item) {
     return (
-      <List.Item key={item.id} className="cryptocurrency-item" item={item}  onClick={this.itemClicked(item).bind(this)}>
+      <List.Item key={item.id} className="cryptocurrency-item" item={item}  onClick={() => this.itemClicked(item)}>
        <List.Item.Meta
           avatar={<Avatar src={item.imageUrl} />}
           title={<a href={item.href}>{item.displayName}</a>}
-        />
+          />
         <Price>
           {item.price}
         </Price>
@@ -46,11 +87,25 @@ export class Prices extends Component {
     )
   }
 
+  loadMore() {
+    return !this.state.loading && (
+      <StyledLoadMore>
+        <Button onClick={this.onLoadMore.bind(this)}>Load more</Button>
+      </StyledLoadMore>
+    );
+  }
+  
   render() {
     return (
       <div>
+        <CryptoCurrencyDrawer visible={this.state.drawerVisible} 
+          cryptocurrencyInfo={this.state.activeCoin} 
+          onClose={() => this.closeDrawer()}>
+
+        </CryptoCurrencyDrawer>
         <ListWrapper>
           <List
+            loadMore={this.loadMore()}
             loading={this.state.loading}
             size="small"
             itemLayout="horizontal"

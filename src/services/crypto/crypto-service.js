@@ -9,8 +9,8 @@ import {
 /**
  * @returns {Array<{id: string, name: string, displayName: string, imageUrl: string, price: number, lastUpdate: Date }>}
  */
-export const getTopListBy24Hours = () => {
-  return axios.get(`${MIN_API_URL}/${TOP_LIST_24H}`).then(({
+export const getTopListBy24Hours = ({limit = 10, symbol = 'USD', page = 0}) => {
+  return axios.get(`${MIN_API_URL}/${TOP_LIST_24H}?limit=${limit}&tsym=${symbol}&page=${page}`).then(({
     data: info
   }) => {
     return info.Data.map(({
@@ -37,6 +37,14 @@ export const getTopListBy24Hours = () => {
  */
 export const getTopExchanges = (symbol = "BTC", limit = 10) => {
   return axios.get(`https://min-api.cryptocompare.com/data/top/exchanges?fsym=${symbol}&tsym=USD&limit=${limit}`)
-    .then(({exchange}) => exchange);
+    .then(({data: { Data: { Exchanges }}}) => Exchanges);
+}
 
+
+/**
+ * 
+ */
+export const getCryptoInfoAndExchanges = (crypto, symbol, limit = 10) => {
+  return axios.get(`https://min-api.cryptocompare.com/data/top/exchanges/full?fsym=${crypto}&tsym=${symbol}&limit=${limit}`)
+    .then(({data: { Data }}) => Data);
 }
