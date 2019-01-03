@@ -6,6 +6,7 @@ import {
   GENERAL_WALLETS,
   CRYPTOCOMPARE_WEBSITE
 } from '../constants';
+import { getSymbol } from '../../shared/utils/Symbol';
 
 
 /**
@@ -48,7 +49,24 @@ export const getTopExchanges = (symbol = "BTC", limit = 10) => {
  */
 export const getCryptoInfoAndExchanges = (crypto, symbol, limit = 10) => {
   return axios.get(`${MIN_API_URL}${TOP_EXCHANGES}/full?fsym=${crypto}&tsym=${symbol}&limit=${limit}`)
-    .then(({data: { Data }}) => Data);
+    .then(({data: { Data }}) => Data)
+    .then(({Exchanges, CoinInfo}) => {
+      return {
+        exchanges: Exchanges.map(market => ({
+          name: market.MARKET,
+          price: getSymbol(market.TOSYMBOL) + ` ` + market.PRICE,
+          lastUpdate: new Date(market.LASTUPDATE),
+          highLast24Hours: market.HIGH24HOUR
+        })),
+        coinInfo: {
+          name: CoinInfo.Name,
+          displayName: CoinInfo.FullName,
+          imageUrl: `${CRYPTOCOMPARE_WEBSITE}${CoinInfo.ImageUrl}`,
+          overviewUrl: `${CRYPTOCOMPARE_WEBSITE}${CoinInfo.Url}`,
+          totalCoinsMined: CoinInfo.TotalCoinsMined
+        }
+      }
+    });
 }
 
 

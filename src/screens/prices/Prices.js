@@ -4,6 +4,7 @@ import { List, Avatar, Button } from 'antd';
 import styled from 'styled-components';
 import './prices.css';
 import { CryptoCurrencyDrawer } from "./components/drawer/CryptocurrencyDrawer";
+import { LoadMore } from '../../shared/components/loadMore/LoadMore';
 
 const ListWrapper = styled.div`
   width: 70%;
@@ -16,13 +17,16 @@ const ListWrapper = styled.div`
 const Price = styled.div`
   user-select: none;
 `
-
-export const StyledLoadMore = styled.div`
-  text-align: center;
-  margin-top: 12px;
-  height: 32px;
-  line-height: 32px;
-`
+const StyledListItem = styled(List.Item)`
+  padding: 10px !important;
+  cursor: pointer;
+  & > div > .ant-list-item-meta-avatar{
+    justify-content: center;
+  }
+  &:hover {
+    background-color: #f1f3f5;
+  }
+`;
 
 export class Prices extends Component {
   state = { 
@@ -70,11 +74,12 @@ export class Prices extends Component {
   }
   
   async loadExchanges() {
-    const data = await getCryptoInfoAndExchanges(this.state.activeCoin.name, 'USD', this.state.exchangesLimit);
+    const { coinInfo, exchanges } = await getCryptoInfoAndExchanges(this.state.activeCoin.name, 'USD', this.state.exchangesLimit);
     this.setState({      
       exchangesLoading: false,
-      exchanges: data.Exchanges,
-      hasMoreExchanges: this.state.exchangesLimit === data.Exchanges.length
+      selectedCoinInfo: coinInfo,
+      exchanges: exchanges,
+      hasMoreExchanges: this.state.exchangesLimit === exchanges.length
     })
   }
   
@@ -83,13 +88,14 @@ export class Prices extends Component {
       drawerVisible: false,
       exchangesLimit: 10,
       activeCoin: {},
+      selectedCoinInfo: {},
       exchanges: []
     });
   }
 
   renderItem(item) {
     return (
-      <List.Item key={item.id} className="cryptocurrency-item" item={item} onClick={() => this.itemClicked(item)}>
+      <StyledListItem key={item.id} item={item} onClick={() => this.itemClicked(item)}>
        <List.Item.Meta
           avatar={<Avatar src={item.imageUrl} />}
           title={<a href={item.href}>{item.displayName}</a>}
@@ -97,20 +103,16 @@ export class Prices extends Component {
         <Price>
           {item.price}
         </Price>
-      </List.Item>
+      </StyledListItem>
     )
   }
 
   loadMore() {
-    return !this.state.loading && (
-      <StyledLoadMore>
-        <Button onClick={this.onLoadMore.bind(this)}>Load more</Button>
-      </StyledLoadMore>
-    );
+    return !this.state.loading && ( <LoadMore  onClick={this.onLoadMore.bind(this)} /> );
   }
 
   onLoadMoreExchanges() {
-    this.setState({exchangesLimit: this.state.exchangesLimit + 10}, this.loadExchanges);
+    this.setState({exchangesLimit: this.state.exchangesLimit + 10, exchangesLoading: true}, this.loadExchanges);
   }
   
   render() {
@@ -118,7 +120,7 @@ export class Prices extends Component {
       <div>
         <CryptoCurrencyDrawer 
           visible={this.state.drawerVisible} 
-          cryptocurrencyInfo={this.state.activeCoin} 
+          cryptocurrencyInfo={this.state.selectedCoinInfo} 
           onClose={() => this.closeDrawer()}
           exchangesLoading={this.state.exchangesLoading}
           exchanges={this.state.exchanges}

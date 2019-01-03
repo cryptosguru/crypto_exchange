@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import { Drawer, Divider, Avatar } from "antd";
 import styled from "styled-components";
 import { Exchanges } from "../exchanges/Exchanges";
+import { CryptoInfo } from '../cryptoInfo/CryptoInfo';
 
-const CoinInfo = styled.div`
+const StyledCoinAvatarAndTitle = styled.div `
   padding-top: 5px;
   display: flex;
   align-items: center;
@@ -23,7 +24,6 @@ const ExchangesTitle = styled.div`
 `
 
 export class CryptoCurrencyDrawer extends Component {
-
   render() {
     return (
       <Drawer
@@ -31,13 +31,14 @@ export class CryptoCurrencyDrawer extends Component {
         width={640}
         placement="right"
         onClose={this.props.onClose}> 
-        <CoinInfo>
+        <StyledCoinAvatarAndTitle>
           <Avatar size="large" src={this.props.cryptocurrencyInfo.imageUrl} />
           <Title>
             {this.props.cryptocurrencyInfo.displayName}
           </Title>
-        </CoinInfo>
+        </StyledCoinAvatarAndTitle>
         <Divider />
+        <CryptoInfo cryptocurrency={this.props.cryptocurrencyInfo}></CryptoInfo>
         <ExchangesTitle>Exchanges that trade this cryptocurrency</ExchangesTitle>
         <Exchanges 
           loading={this.props.exchangesLoading} 
