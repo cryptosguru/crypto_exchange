@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { getTopListBy24Hours, getCryptoInfoAndExchanges } from '../../services/crypto/crypto-service';
-import { List, Avatar, Button } from 'antd';
+import { List, Avatar } from 'antd';
 import styled from 'styled-components';
-import './prices.css';
 import { CryptoCurrencyDrawer } from "./components/drawer/CryptocurrencyDrawer";
 import { LoadMore } from '../../shared/components/loadMore/LoadMore';
 
@@ -56,20 +55,15 @@ export class Prices extends Component {
   }
 
   onLoadMore() {
-    this.setState({
-      searchInfo: {
-        ...this.state.searchInfo,
-        page: this.state.searchInfo.page + 1
-      }
+    this.setState({ 
+      searchInfo: { ...this.state.searchInfo, page: this.state.searchInfo.page + 1 }
     }, this.search);
   }
   
   itemClicked(item) {
     this.setState({
-      drawerVisible: true,
-      activeCoin: item,
-      onClose: () => this.closeDrawer(),
-      exchangesLoading: true,
+      drawerVisible: true, activeCoin: item,
+      onClose: () => this.closeDrawer(), exchangesLoading: true,
     }, this.loadExchanges );
   }
   
@@ -85,11 +79,9 @@ export class Prices extends Component {
   
   closeDrawer() {
     this.setState({
-      drawerVisible: false,
-      exchangesLimit: 10,
-      activeCoin: {},
-      selectedCoinInfo: {},
-      exchanges: []
+      drawerVisible: false, exchangesLimit: 10, 
+      activeCoin: {}, selectedCoinInfo: {}, 
+      exchanges: [] 
     });
   }
 
@@ -108,11 +100,11 @@ export class Prices extends Component {
   }
 
   loadMore() {
-    return !this.state.loading && ( <LoadMore  onClick={this.onLoadMore.bind(this)} /> );
+    return !this.state.loading && ( <LoadMore onClick={this.onLoadMore.bind(this)} /> );
   }
 
   onLoadMoreExchanges() {
-    this.setState({exchangesLimit: this.state.exchangesLimit + 10, exchangesLoading: true}, this.loadExchanges);
+    this.setState({ exchangesLimit: this.state.exchangesLimit + 10, exchangesLoading: true }, this.loadExchanges);
   }
   
   render() {

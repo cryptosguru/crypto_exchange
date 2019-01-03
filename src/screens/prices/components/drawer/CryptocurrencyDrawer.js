@@ -28,7 +28,7 @@ export class CryptoCurrencyDrawer extends Component {
     return (
       <Drawer
         visible={this.props.visible}
-        width={640}
+        width={800}
         placement="right"
         onClose={this.props.onClose}> 
         <StyledCoinAvatarAndTitle>

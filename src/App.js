@@ -5,6 +5,8 @@ import { LandingPage } from './screens/landing-page/LandingPage';
 import { Prices } from './screens/prices/Prices';
 import 'antd/dist/antd.css';  // or 'antd/dist/antd.less'
 import styled, { createGlobalStyle } from "styled-components";
+import { About } from './screens/about/About';
+import { Wallets } from './screens/wallets/Wallets';
 
 const Global = createGlobalStyle`
   * {
@@ -21,10 +23,6 @@ const Global = createGlobalStyle`
   }
 `
 
-// const routesBackgrounds = {
-//  '/' : 'linear-gradient(to right, #0050b3, #22075e)'
-// };
-
 const StyledRouteContent = styled.div`
   height: 100%;
 `
@@ -39,9 +37,11 @@ class App extends Component {
         <Global/>
         <BrowserRouter>
           <StyledRouteContent activeRoute={this.state.activeRoute}>
-            <Header> </Header>
+            <Header/>
             <Route path="/" exact component={ LandingPage }/>
             <Route path="/prices" exact component={ Prices }/>
+            <Route path="/about" exact component={ About }/>
+            <Route path="/wallets" exact component={ Wallets }/>
           </StyledRouteContent>
         </BrowserRouter>
       </div>

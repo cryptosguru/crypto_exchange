@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { List, Button } from "antd";
+import { List } from "antd";
 import styled from 'styled-components';
 import { LoadMore } from '../../../../shared/components/loadMore/LoadMore';
 

@@ -90,3 +90,8 @@ export const getAllWallets = () => {
       }
     }))
 }
+
+
+export const getPricesForCharts = () => {
+  
+}

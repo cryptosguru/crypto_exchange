@@ -15,9 +15,10 @@ export class Header extends PureComponent {
   render() {
     return (
       <StyledHeader>
-        <HeaderItem to="/" label="Home"></HeaderItem>
-        <HeaderItem to="prices" label="Prices"></HeaderItem>
-        <HeaderItem to="about" label="About"></HeaderItem>
+        <HeaderItem to="/" label="Home"/>
+        <HeaderItem to="prices" label="Prices"/>
+        <HeaderItem to="about" label="About"/>
+        <HeaderItem to="wallets" label="Wallets"/>
       </StyledHeader>
     )
   }
