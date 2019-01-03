@@ -14,6 +14,14 @@ const Title = styled.span`
   font-size: 25px;
 `
 
+const ExchangesTitle = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  font-size: 22px;
+  padding: 5px 0px 20px 0px;
+`
+
 export class CryptoCurrencyDrawer extends Component {
 
   render() {
@@ -22,8 +30,7 @@ export class CryptoCurrencyDrawer extends Component {
         visible={this.props.visible}
         width={640}
         placement="right"
-        onClose={this.props.onClose}
-      > 
+        onClose={this.props.onClose}> 
         <CoinInfo>
           <Avatar size="large" src={this.props.cryptocurrencyInfo.imageUrl} />
           <Title>
@@ -31,10 +38,13 @@ export class CryptoCurrencyDrawer extends Component {
           </Title>
         </CoinInfo>
         <Divider />
+        <ExchangesTitle>Exchanges that trade this cryptocurrency</ExchangesTitle>
         <Exchanges 
           loading={this.props.exchangesLoading} 
           exchanges={this.props.exchanges}
-          onClick={this.props.onOpenExchange}/>
+          onClick={this.props.onOpenExchange}
+          onLoadMore={this.props.onLoadMoreExchanges}
+          hasMoreExchanges={this.props.hasMoreExchanges}/>
       </Drawer>
     );
   }

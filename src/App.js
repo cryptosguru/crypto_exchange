@@ -44,7 +44,6 @@ class App extends Component {
             <Route path="/prices" exact component={ Prices }/>
           </StyledRouteContent>
         </BrowserRouter>
-
       </div>
     );
   }

@@ -17,7 +17,7 @@ const Price = styled.div`
   user-select: none;
 `
 
-const StyledLoadMore = styled.div`
+export const StyledLoadMore = styled.div`
   text-align: center;
   margin-top: 12px;
   height: 32px;
@@ -35,6 +35,7 @@ export class Prices extends Component {
     },
     activeCoin: {},
     drawerVisible: false,
+    exchangesLimit: 10,
     exchangesLoading: false,
     exchanges: []
   };
@@ -56,29 +57,31 @@ export class Prices extends Component {
         ...this.state.searchInfo,
         page: this.state.searchInfo.page + 1
       }
-    });
-    setTimeout(() => this.search(), 0);
+    }, this.search);
   }
   
-  async itemClicked(item) {
+  itemClicked(item) {
     this.setState({
       drawerVisible: true,
       activeCoin: item,
       onClose: () => this.closeDrawer(),
-      exchangesLoading: true
-    });
-    console.log(item);
-    const data = await getCryptoInfoAndExchanges(item.name, 'USD', 10);
-    this.setState({
+      exchangesLoading: true,
+    }, this.loadExchanges );
+  }
+  
+  async loadExchanges() {
+    const data = await getCryptoInfoAndExchanges(this.state.activeCoin.name, 'USD', this.state.exchangesLimit);
+    this.setState({      
       exchangesLoading: false,
-      exchanges: data.Exchanges
+      exchanges: data.Exchanges,
+      hasMoreExchanges: this.state.exchangesLimit === data.Exchanges.length
     })
-    console.log(data);
   }
   
   closeDrawer() {
     this.setState({
       drawerVisible: false,
+      exchangesLimit: 10,
       activeCoin: {},
       exchanges: []
     });
@@ -105,17 +108,23 @@ export class Prices extends Component {
       </StyledLoadMore>
     );
   }
+
+  onLoadMoreExchanges() {
+    this.setState({exchangesLimit: this.state.exchangesLimit + 10}, this.loadExchanges);
+  }
   
   render() {
     return (
       <div>
-        <CryptoCurrencyDrawer visible={this.state.drawerVisible} 
+        <CryptoCurrencyDrawer 
+          visible={this.state.drawerVisible} 
           cryptocurrencyInfo={this.state.activeCoin} 
           onClose={() => this.closeDrawer()}
           exchangesLoading={this.state.exchangesLoading}
           exchanges={this.state.exchanges}
-          onOpenExchange={console.log}
-        />
+          onLoadMoreExchanges={() => this.onLoadMoreExchanges()}
+          hasMoreExchanges={this.state.hasMoreExchanges}
+          onOpenExchange={console.log}/>
         <ListWrapper>
           <List
             loadMore={this.loadMore()}
@@ -124,9 +133,7 @@ export class Prices extends Component {
             itemLayout="horizontal"
             dataSource={this.state.cryptos}
             renderItem={this.renderItem.bind(this)}
-          >
-
-          </List>
+          />
         </ListWrapper>
       </div>
     )
