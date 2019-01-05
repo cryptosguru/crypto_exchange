@@ -4,6 +4,7 @@ import { List, Avatar } from 'antd';
 import styled from 'styled-components';
 import { CryptoCurrencyDrawer } from "./components/drawer/CryptocurrencyDrawer";
 import { LoadMore } from '../../shared/components/loadMore/LoadMore';
+import RouteWrapper from '../../shared/components/routeWrapper/RouteWrapper';
 
 const ListWrapper = styled.div`
   width: 70%;
@@ -109,7 +110,7 @@ export class Prices extends Component {
   
   render() {
     return (
-      <div>
+      <RouteWrapper>
         <CryptoCurrencyDrawer 
           visible={this.state.drawerVisible} 
           cryptocurrencyInfo={this.state.selectedCoinInfo} 
@@ -129,7 +130,7 @@ export class Prices extends Component {
             renderItem={this.renderItem.bind(this)}
           />
         </ListWrapper>
-      </div>
+      </RouteWrapper>
     )
   }
 

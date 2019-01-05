@@ -3,7 +3,7 @@ import { Header } from './components/header/Header';
 import { BrowserRouter, Route  } from "react-router-dom";
 import { LandingPage } from './screens/landing-page/LandingPage';
 import { Prices } from './screens/prices/Prices';
-import 'antd/dist/antd.css';  // or 'antd/dist/antd.less'
+import 'antd/dist/antd.css';
 import styled, { createGlobalStyle } from "styled-components";
 import { About } from './screens/about/About';
 import { Wallets } from './screens/wallets/Wallets';

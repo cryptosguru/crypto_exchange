@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import styled from "styled-components";
 import { IntroComponent } from './components/intro/IntroComponent';
+import RouteWrapper from '../../shared/components/routeWrapper/RouteWrapper';
 
 const StyledContent = styled.div`
   width: 100%;
@@ -13,9 +14,11 @@ const StyledContent = styled.div`
 export class LandingPage extends PureComponent {
   render() {
     return (
-      <StyledContent>
-        <IntroComponent/>
-      </StyledContent>
+      <RouteWrapper>
+        <StyledContent>
+          <IntroComponent/>
+        </StyledContent>
+      </RouteWrapper>
     )
   }
 }
