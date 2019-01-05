@@ -1,9 +1,16 @@
-const express = require('express');
+import express from 'express';
+import bodyParser from 'body-parser';
+import path from 'path';
+import dotEnv from "dotenv";
+import { registerRoutes } from "./server/index";
+
+dotEnv.config();
+
 const app = express();
 
-const bodyParser = require('body-parser');
-const path = require('path');
+registerRoutes(app);
 
+const port = process.env.PORT || process.env.port || 5000;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended:true }));
@@ -13,14 +20,8 @@ if (process.env.NODE_ENV == 'production') {
 
   app.get('/', (_req, res) => {
       res.send(path.join(__dirname, 'client/build', 'index.html'));
-  })
+  })    
 
-}
-
-const port = process.env.PORT || process.env.port || 5000;
+}  
 
 app.listen(port, () => console.log('server started'));
-
-app.get('/test', (req, res) => {
-  res.send({express: 'express working'})
-})

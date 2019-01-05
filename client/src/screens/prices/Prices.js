@@ -51,6 +51,7 @@ export class Prices extends Component {
   search() {
     this.setState({ loading: true });
     getTopListBy24Hours(this.state.searchInfo).then(cryptos => {
+      debugger;
       this.setState({ cryptos: this.state.cryptos.concat(cryptos), loading: false});
     })
   }

@@ -13,22 +13,9 @@ import { getSymbol } from '../../shared/utils/Symbol';
  * @returns {Array<{id: string, name: string, displayName: string, imageUrl: string, price: number, lastUpdate: Date }>}
  */
 export const getTopListBy24Hours = ({limit = 10, symbol = 'USD', page = 0}) => {
-  return axios.get(`${MIN_API_URL}/${TOP_LIST_24H}?limit=${limit}&tsym=${symbol}&page=${page}`).then(({
-    data: info
-  }) => {
-    return info.Data.map(({
-      CoinInfo,
-      RAW: { USD: { LASTUPDATE } },
-      DISPLAY: { USD: { PRICE } }
-    }) => ({
-      id: CoinInfo.Id,
-      name: CoinInfo.Name,
-      displayName: CoinInfo.FullName,
-      imageUrl: `${CRYPTOCOMPARE_WEBSITE}/${CoinInfo.ImageUrl}`,
-      price: PRICE,
-      lastUpdate: new Date(LASTUPDATE)
-    }))
-  });
+  return axios
+    .get(`/getTopListBy24Hours?limit=${limit}&symbol=${symbol}&page=${page}`)
+    .then(({data }) => data.cryptos);
 }
 
 /**
