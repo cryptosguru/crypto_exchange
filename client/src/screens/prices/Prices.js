@@ -64,18 +64,43 @@ export class Prices extends Component {
   itemClicked(item) {
     this.setState({
       drawerVisible: true, activeCoin: item,
-      onClose: () => this.closeDrawer(), exchangesLoading: true,
+      exchangesLoading: true, errorMessage: ''
     }, this.loadExchanges );
   }
   
   async loadExchanges() {
-    const { coinInfo, exchanges } = await getCryptoInfoAndExchanges(this.state.activeCoin.name, 'USD', this.state.exchangesLimit);
-    this.setState({      
-      exchangesLoading: false,
-      selectedCoinInfo: coinInfo,
-      exchanges: exchanges,
-      hasMoreExchanges: this.state.exchangesLimit === exchanges.length
-    })
+    const { coinInfo, exchanges, error, errorType, message } = await getCryptoInfoAndExchanges(this.state.activeCoin.name, 'USD', this.state.exchangesLimit);
+    if (!error) { 
+      this.setState({      
+        exchangesLoading: false,
+        selectedCoinInfo: coinInfo,
+        exchanges,
+        hasMoreExchanges: this.state.exchangesLimit === exchanges.length
+      })
+    } else {
+      switch (errorType) {
+        case 'INFO_NOT_FOUND':
+          this.setState({      
+            exchangesLoading: false,
+            selectedCoinInfo: null,
+            exchanges: null,
+            hasMoreExchanges: false,
+            errorMessage: message
+          })
+          break;
+        case 'NONE_EXCHANGE_FOUND': 
+          this.setState({  
+            exchangesLoading: false,
+            selectedCoinInfo: coinInfo,
+            exchanges: null,
+            hasMoreExchanges: false,
+            errorMessage: message
+          });
+          break;
+        default:
+          console.log(`NEW ERROR TYPE ${errorType}`)
+      }
+    }
   }
   
   closeDrawer() {
@@ -91,11 +116,8 @@ export class Prices extends Component {
       <StyledListItem key={item.id} item={item} onClick={() => this.itemClicked(item)}>
        <List.Item.Meta
           avatar={<Avatar src={item.imageUrl} />}
-          title={<a href={item.href}>{item.displayName}</a>}
-          />
-        <Price>
-          {item.price}
-        </Price>
+          title={<a href={item.href}>{item.displayName}</a> }/>
+        <Price> {item.price} </Price>
       </StyledListItem>
     )
   }
@@ -119,6 +141,7 @@ export class Prices extends Component {
           exchanges={this.state.exchanges}
           onLoadMoreExchanges={() => this.onLoadMoreExchanges()}
           hasMoreExchanges={this.state.hasMoreExchanges}
+          errorMessage={this.state.errorMessage}
           onOpenExchange={console.log}/>
         <ListWrapper>
           <List

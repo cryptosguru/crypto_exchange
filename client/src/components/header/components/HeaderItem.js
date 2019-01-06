@@ -15,6 +15,15 @@ const StyledHeaderItem = styled.div`
     &:hover {
       color: #0050b3;
     }
+    &:hover {
+      outline: none;
+    }
+  }
+`
+
+const StyledLink = styled(Link)`
+  &:focus {
+    text-decoration: none;
   }
 `
 
@@ -34,9 +43,9 @@ export class HeaderItem extends PureComponent {
   render() {
     return (
       <StyledHeaderItem>
-        <Link to={this.props.to}>
+        <StyledLink to={this.props.to}>
           { this.props.label}
-        </Link>
+        </StyledLink>
       
       </StyledHeaderItem>
     )

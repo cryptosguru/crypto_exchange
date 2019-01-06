@@ -31,21 +31,36 @@ export class CryptoCurrencyDrawer extends Component {
         width={800}
         placement="right"
         onClose={this.props.onClose}> 
-        <StyledCoinAvatarAndTitle>
-          <Avatar size="large" src={this.props.cryptocurrencyInfo.imageUrl} />
-          <Title>
-            {this.props.cryptocurrencyInfo.displayName}
-          </Title>
-        </StyledCoinAvatarAndTitle>
-        <Divider />
-        <CryptoInfo cryptocurrency={this.props.cryptocurrencyInfo}></CryptoInfo>
-        <ExchangesTitle>Exchanges that trade this cryptocurrency</ExchangesTitle>
-        <Exchanges 
-          loading={this.props.exchangesLoading} 
-          exchanges={this.props.exchanges}
-          onClick={this.props.onOpenExchange}
-          onLoadMore={this.props.onLoadMoreExchanges}
-          hasMoreExchanges={this.props.hasMoreExchanges}/>
+        { this.props.cryptocurrencyInfo && (
+          <>
+          <StyledCoinAvatarAndTitle>
+            <Avatar size="large" src={this.props.cryptocurrencyInfo.imageUrl} /> 
+            <Title>
+              {this.props.cryptocurrencyInfo.displayName}
+            </Title>
+          </StyledCoinAvatarAndTitle>
+          <Divider />
+          <CryptoInfo cryptocurrency={this.props.cryptocurrencyInfo}/>
+          </>
+        )}
+        { this.props.exchanges && (
+          <>
+            <ExchangesTitle>Exchanges that trade this cryptocurrency</ExchangesTitle>
+              <Exchanges 
+              loading={this.props.exchangesLoading} 
+              exchanges={this.props.exchanges}
+              onClick={this.props.onOpenExchange}
+              onLoadMore={this.props.onLoadMoreExchanges}
+              hasMoreExchanges={this.props.hasMoreExchanges}/>
+          </>
+        )}
+        { this.props.errorMessage && (
+          <>
+            { this.props.errorMessage }
+          </>
+        )
+
+        }
       </Drawer>
     );
   }
