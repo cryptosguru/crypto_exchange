@@ -1,20 +1,11 @@
 import axios from "axios";
-import {
-  MIN_API_URL,
-  TOP_LIST_24H,
-  TOP_EXCHANGES,
-  GENERAL_WALLETS,
-  CRYPTOCOMPARE_WEBSITE
-} from '../constants';
-import { getSymbol } from '../../shared/utils/Symbol';
-
 
 /**
  * @returns {Array<{id: string, name: string, displayName: string, imageUrl: string, price: number, lastUpdate: Date }>}
  */
 export const getTopListBy24Hours = ({limit = 10, symbol = 'USD', page = 0}) => {
   return axios
-    .get(`/getTopListBy24Hours?limit=${limit}&symbol=${symbol}&page=${page}`)
+    .get(`/topListBy24Hours?limit=${limit}&symbol=${symbol}&page=${page}`)
     .then(({data }) => data.cryptos);
 }
 
@@ -25,9 +16,8 @@ export const getTopListBy24Hours = ({limit = 10, symbol = 'USD', page = 0}) => {
  * 
  * @returns {Array<string>} a array with the names of the top exchanges
  */
-export const getTopExchanges = (symbol = "BTC", limit = 10) => {
-  return axios.get(`${MIN_API_URL}${TOP_EXCHANGES}?fsym=${symbol}&tsym=USD&limit=${limit}`)
-    .then(({data: { Data: { Exchanges }}}) => Exchanges);
+export const getTopExchanges = (crypto = "BTC", limit = 10) => {
+  return axios.get(`/topExchanges?crypto=${crypto}&limit=${limit}`);
 }
 
 
@@ -35,25 +25,7 @@ export const getTopExchanges = (symbol = "BTC", limit = 10) => {
  * 
  */
 export const getCryptoInfoAndExchanges = (crypto, symbol, limit = 10) => {
-  return axios.get(`${MIN_API_URL}${TOP_EXCHANGES}/full?fsym=${crypto}&tsym=${symbol}&limit=${limit}`)
-    .then(({data: { Data }}) => Data)
-    .then(({Exchanges, CoinInfo}) => {
-      return {
-        exchanges: Exchanges.map(market => ({
-          name: market.MARKET,
-          price: getSymbol(market.TOSYMBOL) + ` ` + market.PRICE,
-          lastUpdate: new Date(market.LASTUPDATE),
-          highLast24Hours: market.HIGH24HOUR
-        })),
-        coinInfo: {
-          name: CoinInfo.Name,
-          displayName: CoinInfo.FullName,
-          imageUrl: `${CRYPTOCOMPARE_WEBSITE}${CoinInfo.ImageUrl}`,
-          overviewUrl: `${CRYPTOCOMPARE_WEBSITE}${CoinInfo.Url}`,
-          totalCoinsMined: CoinInfo.TotalCoinsMined
-        }
-      }
-    });
+  return axios.get(`/cryptoInfoAndExchanges?crypto=${crypto}&symbol=${symbol}&limit=${limit}`).then(({data}) => data)
 }
 
 
@@ -61,21 +33,7 @@ export const getCryptoInfoAndExchanges = (crypto, symbol, limit = 10) => {
  * @returns {Array<wallets>}
  */
 export const getAllWallets = () => {
-  return axios.get(`${MIN_API_URL}${GENERAL_WALLETS}`)
-    .then(({data: { Data }}) => Data)
-    .then(wallets => wallets.map(wallet => {
-      return {
-        id: wallet.Id,
-        name: wallet.Name,
-        anonymity: wallet.Anonymity,
-        secuiry: wallet.Security,
-        logoUrl: `${CRYPTOCOMPARE_WEBSITE}${wallet.LogoUrl}`,
-        coins: wallet.Coins,
-        platforms: wallet.Platforms,
-        sourceCodeUrl: wallet.SourceCodeUrl,
-        url: wallet.AffiliateURL
-      }
-    }))
+  return axios.get('/allWallets');
 }
 
 

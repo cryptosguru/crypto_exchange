@@ -1,11 +1,11 @@
 import axios from "axios";
 import { MIN_API_URL, TOP_LIST_24H, CRYPTOCOMPARE_WEBSITE } from '../../config';
 
-const getToListBy24Hours = async (req, res) => {
+const topListBy24Hours = async (req, res) => {
   const { limit = 10, symbol = 'USD', page = 0} = req.query;
   console.log(req.query);
   try {
-    const { data } = await axios.get(`${MIN_API_URL}/${TOP_LIST_24H}?limit=${limit}&tsym=${symbol}&page=${page}`)
+    const { data } = await axios.get(`${MIN_API_URL}/${TOP_LIST_24H}?limit=${limit}&tsym=${symbol}&page=${page}&api_key=${process.env.MIN_API_TOKEN}`)
 
     res.send({
       cryptos: data.Data.map(({ CoinInfo, RAW: { USD: { LASTUPDATE } }, DISPLAY: { USD: { PRICE } }}) => 
@@ -23,4 +23,4 @@ const getToListBy24Hours = async (req, res) => {
   
 };
 
-export { getToListBy24Hours }
+export { topListBy24Hours }
