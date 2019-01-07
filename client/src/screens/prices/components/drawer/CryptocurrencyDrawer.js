@@ -34,13 +34,13 @@ export class CryptoCurrencyDrawer extends Component {
         { this.props.cryptocurrencyInfo && (
           <>
           <StyledCoinAvatarAndTitle>
-            <Avatar size="large" src={this.props.cryptocurrencyInfo.imageUrl} /> 
+            <Avatar size="large" src={this.props.cryptocurrencyInfo.imageUrl} />
             <Title>
               {this.props.cryptocurrencyInfo.displayName}
             </Title>
           </StyledCoinAvatarAndTitle>
           <Divider />
-          <CryptoInfo cryptocurrency={this.props.cryptocurrencyInfo}/>
+        { !this.props.exchangesLoading && (<CryptoInfo cryptocurrency={this.props.cryptocurrencyInfo}/>) }
           </>
         )}
         { this.props.exchanges && (

@@ -2,6 +2,7 @@ import React, { PureComponent } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import { Menu, Icon } from 'antd';
 
 const StyledHeaderItem = styled.div`
   & > a {
@@ -42,12 +43,18 @@ export class HeaderItem extends PureComponent {
 
   render() {
     return (
-      <StyledHeaderItem>
-        <StyledLink to={this.props.to}>
-          { this.props.label}
-        </StyledLink>
+      <Menu.Item key={this.props.to}>
+          <StyledLink to={this.props.to}>
+            <Icon type="fullscreen"/>{ this.props.label}
+          </StyledLink>
+      </Menu.Item>
       
-      </StyledHeaderItem>
+      // <StyledHeaderItem>
+      //   <StyledLink to={this.props.to}>
+      //     { this.props.label}
+      //   </StyledLink>
+      
+      // </StyledHeaderItem>
     )
   }
 }
