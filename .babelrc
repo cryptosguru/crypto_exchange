@@ -7,5 +7,5 @@
       }
     }]
   ],
-  "plugins": ["syntax-async-functions"]
+  "plugins": ["syntax-async-functions", "transform-object-rest-spread"]
 }
