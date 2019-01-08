@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { Drawer, Divider, Avatar } from "antd";
+import { Drawer, Divider, Avatar, Spin } from "antd";
 import styled from "styled-components";
 import { Exchanges } from "../exchanges/Exchanges";
 import { CryptoInfo } from '../cryptoInfo/CryptoInfo';
+import { PriceChart } from '../../../../shared/components/graphs/chart/PriceChart';
 
 const StyledCoinAvatarAndTitle = styled.div `
   padding-top: 5px;
@@ -21,6 +22,21 @@ const ExchangesTitle = styled.div`
   justify-content: center;
   font-size: 22px;
   padding: 5px 0px 20px 0px;
+`
+
+const GraphWrapper = styled.div`
+  width: 100%;
+  height: 350px;
+  text-align: center;
+  padding-bottom: 40px;
+`
+
+const LoadingChart = styled.div`
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  width: 100%;
+  height: 350px;
 `
 
 export class CryptoCurrencyDrawer extends Component {
@@ -43,11 +59,30 @@ export class CryptoCurrencyDrawer extends Component {
         { !this.props.exchangesLoading && (<CryptoInfo cryptocurrency={this.props.cryptocurrencyInfo}/>) }
           </>
         )}
+        {
+          !this.props.loading && this.props.loadingPriceHistory && (
+            <LoadingChart>
+              <Spin/>
+            </LoadingChart>
+          )
+        }
+        {
+          !this.props.loadingPriceHistory && this.props.priceHistory && this.props.priceHistory.length && (
+            <>
+              <Divider/>
+              <GraphWrapper>
+                <Title>Last five days history</Title>
+                <PriceChart data={this.props.priceHistory} />
+              </GraphWrapper>
+              <Divider/>
+            </>
+          )
+        }
         { this.props.exchanges && (
           <>
             <ExchangesTitle>Exchanges that trade this cryptocurrency</ExchangesTitle>
               <Exchanges 
-              loading={this.props.exchangesLoading} 
+              loading={!this.props.loading && this.props.exchangesLoading} 
               exchanges={this.props.exchanges}
               onClick={this.props.onOpenExchange}
               onLoadMore={this.props.onLoadMoreExchanges}

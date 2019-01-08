@@ -13,12 +13,13 @@ const currenciesPricesInInterval = async (req, res) => {
   const formattedStart = ISODateString(new Date(start));
   const formattedEnd = end ? ISODateString(new Date(end)) : '';
   const URL = `${NOMICS_URL}${CANDLES}?start=${formattedStart}${formattedEnd ? `&end=${formattedEnd}`: ''}&key=${process.env.NOMICS_TOKEN}&currency=${currency}&interval=${interval}`;
-  console.log(URL);
   const {
     data
   } = await axios.get(URL);
   res.send({
-    prices: data.map((candle) => ({...candle, avarage: (parseFloat(candle.low) + parseFloat(candle.high)) / 2}))
+    prices: data
+      .map((candle) => ({...candle, average: (parseFloat(candle.low) + parseFloat(candle.high)) / 2}))
+      .sort((firstCandle, secondCandle) => new Date(firstCandle.timestamp) - new Date(secondCandle.timestamp))
   });
 }
 

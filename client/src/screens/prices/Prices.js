@@ -41,15 +41,13 @@ export class Prices extends Component {
     drawerVisible: false,
     exchangesLimit: 10,
     exchangesLoading: false,
-    exchanges: []
+    exchanges: [],
+    priceHistory: [],
+    loadingPriceHistory: false
   };
 
   componentWillMount() {
     this.search();
-    const date = new Date();
-    getPricesForCharts(new Date(date.setMonth(date.getMonth() - 1)), 'BTC').then((x) => {
-      console.log(`prices for charts test`, x);
-    })
   }
 
   search() {
@@ -68,8 +66,27 @@ export class Prices extends Component {
   itemClicked(item) {
     this.setState({
       drawerVisible: true, activeCoin: item,
-      exchangesLoading: true, errorMessage: ''
-    }, this.loadExchanges );
+      exchangesLoading: true, errorMessage: '', loadingPriceHistory: true
+    },  this.loadExchanges );
+  }
+
+  loadPriceHistory() {
+    this.setState({
+      loadingPriceHistory: true
+    });
+    const date = new Date();
+    console.log(this.state.selectedCoinInfo)
+    getPricesForCharts(new Date(date.setDate(date.getDate() - 6)), this.state.selectedCoinInfo.name).then(({prices}) => {
+      this.setState({
+        priceHistory: prices.map(({average, timestamp}) => {
+          const date = new Date(timestamp);
+          return {
+            y: average, x: `${date.getDate()}/${date.getMonth()}`
+          };
+        }),
+        loadingPriceHistory: false
+      })
+    })
   }
   
   async loadExchanges() {
@@ -78,9 +95,11 @@ export class Prices extends Component {
       this.setState({      
         exchangesLoading: false,
         selectedCoinInfo: coinInfo,
+        loadingPriceHistory: true,
         exchanges,
         hasMoreExchanges: this.state.exchangesLimit === exchanges.length
-      })
+      }, this.loadPriceHistory);
+      
     } else {
       switch (errorType) {
         case 'INFO_NOT_FOUND':
@@ -89,7 +108,8 @@ export class Prices extends Component {
             selectedCoinInfo: null,
             exchanges: null,
             hasMoreExchanges: false,
-            errorMessage: message
+            errorMessage: message,
+            loadingPriceHistory: false
           })
           break;
         case 'NONE_EXCHANGE_FOUND': 
@@ -98,8 +118,9 @@ export class Prices extends Component {
             selectedCoinInfo: coinInfo,
             exchanges: null,
             hasMoreExchanges: false,
-            errorMessage: message
-          });
+            errorMessage: message,
+            loadingPriceHistory: true
+          }, this.loadPriceHistory);
           break;
         default:
           console.log(`NEW ERROR TYPE ${errorType}`)
@@ -111,7 +132,7 @@ export class Prices extends Component {
     this.setState({
       drawerVisible: false, exchangesLimit: 10, 
       activeCoin: {}, selectedCoinInfo: {}, 
-      exchanges: [] 
+      exchanges: [], priceHistory: []
     });
   }
 
@@ -146,7 +167,10 @@ export class Prices extends Component {
           onLoadMoreExchanges={() => this.onLoadMoreExchanges()}
           hasMoreExchanges={this.state.hasMoreExchanges}
           errorMessage={this.state.errorMessage}
-          onOpenExchange={console.log}/>
+          onOpenExchange={console.log}
+          priceHistory={this.state.priceHistory}
+          loadingPriceHistory={this.state.loadingPriceHistory}
+          />
         <ListWrapper>
           <List
             loadMore={this.loadMore()}

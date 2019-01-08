@@ -1,23 +1,13 @@
-import React, { Component } from "react";
-import { VictoryChart, VictoryTheme, VictoryStack } from "victory";
+import React, { PureComponent } from "react";
+import { VictoryChart, VictoryTheme, VictoryLine } from "victory";
 
-export class PriceChart extends Component {
+export class PriceChart extends PureComponent {
     render() {
-        const formattedData = this.props.data
-            .map((price) => {
-                return {
-                    x: new Date(price.timestamp),
-                    y: ( parseFloat(price.low) + parseFloat(price.high)) / 2
-                }
-            })
         return (
             <VictoryChart
                 theme={VictoryTheme.material}
-                animate={{duration: 1000}}
-            >
-                <VictoryStack>
-
-                </VictoryStack>
+                animate={{duration: 600}}>
+                <VictoryLine data={this.props.data}/>
             </VictoryChart>
         )
     }
