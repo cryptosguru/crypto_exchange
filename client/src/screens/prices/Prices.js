@@ -75,7 +75,7 @@ export class Prices extends Component {
       loadingPriceHistory: true
     });
     const date = new Date();
-    console.log(this.state.selectedCoinInfo)
+
     getPricesForCharts(new Date(date.setDate(date.getDate() - 6)), this.state.selectedCoinInfo.name).then(({prices}) => {
       this.setState({
         priceHistory: prices.map(({average, timestamp}) => {
