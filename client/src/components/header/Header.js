@@ -1,30 +1,43 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components'
-import { HeaderItem } from './components/HeaderItem';
-import { Menu } from 'antd';
+import { Link } from "react-router-dom";
+import { Menu, Icon } from 'antd';
 
-const StyledHeader = styled.div`
-  width: 100%;
-  display: flex;
-  height: 8%;
-  background-color: transparent;
-  justify-content: center;
-  align-items: center;
-`;
-export class Header extends PureComponent {
-  handleClick() {
-
+const StyledLink = styled(Link)`  
+  &:focus {
+    text-decoration: none;
   }
-  render() { 
+`
+
+const StyledMenuItem = styled(Menu.Item)`
+  a {
+   color: ${props => props.isactive === "true" ? '#1890ff': 'rgba(0, 0, 0, 0.65)'} !important;
+  }
+  border-bottom: 2px solid ${props => props.isactive === "true" ? '#1890ff': 'transparent'} !important;
+`
+
+export class Header extends PureComponent {
+  items = [
+    { route: "", label: "Home", icon: 'home'},
+    { route: "prices", label: "Prices", icon: 'dollar'},
+    { route: "about", label: "About", icon: 'info-circle'},
+    { route: "wallets", label: "Wallets", icon: 'wallet'}
+  ];
+  render() {
     return (
       <Menu 
         onClick={this.handleClick}
         selectedKeys={[this.props.current]}
-        mode="horizontal">
-        <HeaderItem to="/" label="Home"/>
-        <HeaderItem to="prices" label="Prices"/>
-        <HeaderItem to="about" label="About"/>
-        <HeaderItem to="wallets" label="Wallets"/>
+        mode="horizontal"
+        style={{ display: `flex`, justifyContent: 'center' }}
+        >
+        {this.items.map(({ route, label, icon}) => (
+         <StyledMenuItem onClick={() => this.props.onChangeRoute(route)} key={route} isactive={(this.props.current === route).toString()}>
+          <StyledLink to={route} >
+            <Icon type={icon}/>{label}
+          </StyledLink>
+         </StyledMenuItem>
+        ))}
       </Menu>
     )
   }

@@ -37,6 +37,7 @@ export const getAllWallets = () => {
 }
 
 
-export const getPricesForCharts = () => {
-  
+export const getPricesForCharts = (start = new Date(), currency, end, interval = '1d') => {
+  return axios.get(`/currenciesPricesInInterval?start=${start.toISOString()}${end ? `&end=${end.toISOString()}`: ''}&currency=${currency}&interval=${interval}`)
+    .then(({data}) => data);
 }

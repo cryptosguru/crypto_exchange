@@ -29,7 +29,11 @@ const StyledRouteContent = styled.div`
 
 class App extends Component {
   state = {
-    activeRoute: `/`
+    activeRoute: ``
+  }
+
+  routeChanged(activeRoute) {
+    this.setState({ activeRoute });
   }
 
   render() {
@@ -38,7 +42,7 @@ class App extends Component {
         <Global/>
         <BrowserRouter>
           <StyledRouteContent activeRoute={this.state.activeRoute}>
-            <Header/>
+            <Header onChangeRoute={(route) => this.routeChanged(route)} current={this.state.activeRoute}/>
             <Route path="/" exact component={ LandingPage }/>
             <Route path="/prices" exact component={ Prices }/>
             <Route path="/about" exact component={ About }/>
