@@ -9,7 +9,7 @@
     "start": "node ./build/index.js",
     "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build",
     "dev": "babel-node index.js",
-    "build-server": "babel ./index.js --out-dir ./build -s && babel server --out-dir ./build/server -s",
+    "build-server": "babel index.js --out-dir build -s && babel server --out-dir build/server -s",
     "build": "npm run clean && npm install && npm run build-server",
     "clean": "rm -rf build && mkdir build"
   },
