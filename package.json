@@ -7,6 +7,7 @@
   "private": false,
   "scripts": {
     "start": "node ./build/index.js",
+    "postinstall": "npm run build",
     "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build",
     "dev": "babel-node index.js",
     "build-server": "babel ./index.js --out-dir ./build -s && babel server --out-dir ./build/server -s",
