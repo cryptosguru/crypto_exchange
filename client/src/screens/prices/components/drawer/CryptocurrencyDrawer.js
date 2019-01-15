@@ -49,14 +49,14 @@ export class CryptoCurrencyDrawer extends Component {
         onClose={this.props.onClose}> 
         { this.props.cryptocurrencyInfo && (
           <>
-          <StyledCoinAvatarAndTitle>
-            <Avatar size="large" src={this.props.cryptocurrencyInfo.imageUrl} />
-            <Title>
-              {this.props.cryptocurrencyInfo.displayName}
-            </Title>
-          </StyledCoinAvatarAndTitle>
-          <Divider />
-        { !this.props.exchangesLoading && (<CryptoInfo cryptocurrency={this.props.cryptocurrencyInfo}/>) }
+            <StyledCoinAvatarAndTitle>
+              <Avatar size="large" src={this.props.cryptocurrencyInfo.imageUrl} />
+              <Title>
+                {this.props.cryptocurrencyInfo.displayName}
+              </Title>
+            </StyledCoinAvatarAndTitle>
+            <Divider />
+            { !this.props.exchangesLoading && (<CryptoInfo cryptocurrency={this.props.cryptocurrencyInfo}/>) }
           </>
         )}
         {
@@ -67,8 +67,9 @@ export class CryptoCurrencyDrawer extends Component {
           )
         }
         {
-          !this.props.loadingPriceHistory && this.props.priceHistory && this.props.priceHistory.length && (
+          !this.props.loadingPriceHistory && this.props.priceHistory && (
             <>
+              <Title>{this.props.cryptocurrencyInfo.price}</Title>
               <Divider/>
               <GraphWrapper>
                 <Title>Last five days history</Title>
