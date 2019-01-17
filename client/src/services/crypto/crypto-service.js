@@ -47,5 +47,5 @@ export const getPricesForCharts = (start = new Date(), currency, end, interval =
 }
 
 export const getAllCoins = () => {
-  return axios.get('/allCoins');
+  return axios.get('/allCoins').then(({data}) => data.coins);
 }
