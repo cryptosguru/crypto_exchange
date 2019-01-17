@@ -17,7 +17,7 @@ export class About extends PureComponent {
         return (
             <RouteWrapper>
                 <AboutContent>
-                    <AboutContainer title="About Us"/>
+                    <AboutContainer title="About"/>
                 </AboutContent>
             </RouteWrapper>
         )

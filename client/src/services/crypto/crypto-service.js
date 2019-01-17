@@ -20,7 +20,6 @@ export const getTopExchanges = (crypto = "BTC", limit = 10) => {
   return axios.get(`/topExchanges?crypto=${crypto}&limit=${limit}`);
 }
 
-
 /**
  * 
  */
@@ -28,16 +27,25 @@ export const getCryptoInfoAndExchanges = (crypto, symbol, limit = 10) => {
   return axios.get(`/cryptoInfoAndExchanges?crypto=${crypto}&symbol=${symbol}&limit=${limit}`).then(({data}) => data)
 }
 
-
 /**
  * @returns {Array<wallets>}
  */
-export const getAllWallets = () => {
-  return axios.get('/allWallets');
+export const getAllWallets = (coinsIncludes = "", security = "") => {
+  return axios.get(`/allWallets?coinsInclude=${coinsIncludes}&security=${security}`);
 }
 
-
+/**
+ * 
+ * @param {Date} start 
+ * @param {string} currency 
+ * @param {Date} end 
+ * @param {Enumerator} interval - example: '1d' for 1 Day.
+ */
 export const getPricesForCharts = (start = new Date(), currency, end, interval = '1d') => {
   return axios.get(`/currenciesPricesInInterval?start=${start.toISOString()}${end ? `&end=${end.toISOString()}`: ''}&currency=${currency}&interval=${interval}`)
-    .then(({data}) => data);
+    .then(({ data }) => data);
+}
+
+export const getAllCoins = () => {
+  return axios.get('/allCoins');
 }

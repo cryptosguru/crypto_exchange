@@ -25,8 +25,10 @@ export class AboutContainer extends PureComponent {
       <AboutWrapper>
         <h3>{this.props.title}</h3>
         <Description>
-          This was a simple project to test development with React, <a href="https://ant.design/">Ant Design </a> 
-          and Node. It consists in a simple project to help with news about cryptocurrencies, last days history,
+          This was a simple project to test development with <a target="_blank" rel="noopener noreferrer" href="https://reactjs.org/">React</a> 
+          ,<a target="_blank" rel="noopener noreferrer" href="https://ant.design/"> Ant Design </a> and 
+          <a rel="noopener noreferrer" target="_blank" href="https://nodejs.org/en/"> NodeJs</a>. 
+          It consists in a simple project to help with news about cryptocurrencies, last days history,
           exchanges that trade a given cryptocurrency, and wallets with their level of requeriments and facility
           to use.
 
