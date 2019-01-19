@@ -1,7 +1,7 @@
 {
   "name": "crypto-foo",
   "version": "1.0.0",
-  "repository": "https://github.com/luanraithz/crypto.git",
+  "repository": "https://github.com/luanraithz/crypto-foo.git",
   "author": "luanraithz <luanraithz@gmail.com>",
   "license": "MIT",
   "private": false,

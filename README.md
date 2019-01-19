@@ -16,7 +16,7 @@
 ### Starting the Nodejs(Backend)
 ```bash
 
-  git clone https://github.com/luanraithz/crypto.git
+  git clone https://github.com/luanraithz/crypto-foo.git
   
   cd ./crypto
 

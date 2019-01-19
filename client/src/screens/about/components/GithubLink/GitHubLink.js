@@ -22,7 +22,7 @@ const GitHubLabel = styled.a`
 export class GitHubLink extends PureComponent{
   render() {
     return (
-      <GitHubLabel href="https://github.com/luanraithz/crypto" rel="noopener noreferrer" target="_blank">
+      <GitHubLabel href="https://github.com/luanraithz/crypto-foo" rel="noopener noreferrer" target="_blank">
         Check us out on GitHub!
         <Icon type="github"/>
       </GitHubLabel>
