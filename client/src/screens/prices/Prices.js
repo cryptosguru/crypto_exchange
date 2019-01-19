@@ -1,5 +1,9 @@
 import React, { Component } from "react";
-import { getTopListBy24Hours, getCryptoInfoAndExchanges, getPricesForCharts } from '../../services/crypto/crypto-service';
+import {
+  getTopListBy24Hours,
+  getCryptoInfoAndExchanges,
+  getPricesForCharts
+} from '../../services/crypto/crypto-service';
 import { List, Avatar } from 'antd';
 import styled from 'styled-components';
 import { CryptoCurrencyDrawer } from "./components/drawer/CryptocurrencyDrawer";

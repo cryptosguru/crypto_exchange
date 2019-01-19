@@ -19,9 +19,9 @@ const StyledMenuItem = styled(Menu.Item)`
 export class Header extends PureComponent {
   items = [
     { route: "", label: "Home", icon: 'home'},
-    { route: "prices", label: "Prices", icon: 'dollar'},
-    { route: "about", label: "About", icon: 'info-circle'},
-    { route: "wallets", label: "Wallets", icon: 'wallet'}
+    { route: "/prices", label: "Prices", icon: 'dollar'},
+    { route: "/about", label: "About", icon: 'info-circle'},
+    { route: "/wallets", label: "Wallets", icon: 'wallet'}
   ];
   render() {
     return (

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Header } from './components/header/Header';
-import { BrowserRouter, Route  } from "react-router-dom";
+import { BrowserRouter, Route } from "react-router-dom";
 import { LandingPage } from './screens/landing-page/LandingPage';
 import { Prices } from './screens/prices/Prices';
 import 'antd/dist/antd.css';
@@ -29,7 +29,7 @@ const StyledRouteContent = styled.div`
 
 class App extends Component {
   state = {
-    activeRoute: ``
+    activeRoute: window.location.pathname || '/'
   }
 
   routeChanged(activeRoute) {
