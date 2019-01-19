@@ -6,7 +6,7 @@ import axios from "axios";
 export const getTopListBy24Hours = ({limit = 10, symbol = 'USD', page = 0}) => {
   return axios
     .get(`/topListBy24Hours?limit=${limit}&symbol=${symbol}&page=${page}`)
-    .then(({data }) => data.cryptos);
+    .then(({ data }) => data.cryptos);
 }
 
 /**
@@ -17,14 +17,16 @@ export const getTopListBy24Hours = ({limit = 10, symbol = 'USD', page = 0}) => {
  * @returns {Array<string>} a array with the names of the top exchanges
  */
 export const getTopExchanges = (crypto = "BTC", limit = 10) => {
-  return axios.get(`/topExchanges?crypto=${crypto}&limit=${limit}`);
+  return axios.get(`/topExchanges?crypto=${crypto}&limit=${limit}`)
+    .then(({data}) => data.exchanges);
 }
 
 /**
  * 
  */
 export const getCryptoInfoAndExchanges = (crypto, symbol, limit = 10) => {
-  return axios.get(`/cryptoInfoAndExchanges?crypto=${crypto}&symbol=${symbol}&limit=${limit}`).then(({data}) => data)
+  return axios.get(`/cryptoInfoAndExchanges?crypto=${crypto}&symbol=${symbol}&limit=${limit}`)
+    .then(({data}) => data)
 }
 
 /**
@@ -43,10 +45,12 @@ export const getAllWallets = (coinsIncludes = "", anonymity = "") => {
  * @param {Enumerator} interval - example: '1d' for 1 Day.
  */
 export const getPricesForCharts = (start = new Date(), currency, end, interval = '1d') => {
-  return axios.get(`/currenciesPricesInInterval?start=${start.toISOString()}${end ? `&end=${end.toISOString()}`: ''}&currency=${currency}&interval=${interval}`)
+  const url = `/currenciesPricesInInterval?start=${start.toISOString()}${end ? `&end=${end.toISOString()}`: ''}&currency=${currency}&interval=${interval}`;
+  return axios.get(url)
     .then(({ data }) => data);
 }
 
 export const getAllCoins = () => {
-  return axios.get('/allCoins').then(({data}) => data.coins);
+  return axios.get('/allCoins')
+    .then(({data}) => data.coins);
 }

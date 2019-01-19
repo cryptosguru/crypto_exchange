@@ -50,7 +50,7 @@ export class Wallets extends Component {
         } catch (error) {
           console.error(error);
         }
-    })
+    });
   }
 
   render() {
@@ -58,7 +58,7 @@ export class Wallets extends Component {
       <RouteWrapper>
         <StyledRoute>
           <WalletsFilters handleChange={this.handleFilterChanged}
-            anonymity={this.state.anonymity} coin={this.state.coin} 
+            anonymity={this.state.anonymity} coin={this.state.coin}
             onFilter={this.applyFilters}/>
           <WalletsList list={this.state.wallets} loading={this.state.loading}/>
         </StyledRoute>
