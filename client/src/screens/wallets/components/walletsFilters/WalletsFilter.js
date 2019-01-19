@@ -51,12 +51,12 @@ export class WalletsFilters extends PureComponent {
               onPressEnter={this.props.onFilter} />
           </Filter>
           <Filter>
-            <label>Security</label>
+            <label>Anonymity</label>
             <Select name="anonymity" size="large" defaultValue={this.props.anonymity}
               onChange={this.callChangedSecurity} style={{width: 150}}>
-              <Option key="high" value="high">High</Option>
-              <Option key="medium" value="medium">Medium</Option>
-              <Option key="low" value="low" >Low</Option>
+              <Option key="High" value="High">High</Option>
+              <Option key="Medium" value="Medium">Medium</Option>
+              <Option key="Low" value="Low" >Low</Option>
             </Select>
           </Filter>
           <Button size="large" onClick={this.props.onFilter}

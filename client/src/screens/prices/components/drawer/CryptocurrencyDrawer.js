@@ -60,11 +60,8 @@ export class CryptoCurrencyDrawer extends Component {
           </>
         )}
         {
-          !this.props.loading && this.props.loadingPriceHistory && (
-            <LoadingChart>
-              <Spin/>
-            </LoadingChart>
-          )
+          !this.props.loading && this.props.loadingPriceHistory && 
+            ( <LoadingChart> <Spin/> </LoadingChart> )
         }
         {
           !this.props.loadingPriceHistory && this.props.priceHistory && (
@@ -91,9 +88,7 @@ export class CryptoCurrencyDrawer extends Component {
           </>
         )}
         { this.props.errorMessage && (
-          <>
-            { this.props.errorMessage }
-          </>
+          <> { this.props.errorMessage } </>
         )
 
         }
