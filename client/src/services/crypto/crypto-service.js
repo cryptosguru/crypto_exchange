@@ -31,7 +31,8 @@ export const getCryptoInfoAndExchanges = (crypto, symbol, limit = 10) => {
  * @returns {Array<wallets>}
  */
 export const getAllWallets = (coinsIncludes = "", security = "") => {
-  return axios.get(`/allWallets?coinsInclude=${coinsIncludes}&security=${security}`);
+  return axios.get(`/allWallets?coinsInclude=${coinsIncludes}&security=${security}`)
+    .then(({data}) => data.wallets);
 }
 
 /**
