@@ -25,7 +25,7 @@ export class CryptoFooIntro extends PureComponent {
     return (
       <StyledContainer>
         <Title>Crypto-Foo</Title>
-        <Subtitle> Cryptocurrency Prices and Help </Subtitle>
+        <Subtitle> Cryptocurrency's prices, help and wallets</Subtitle>
       </StyledContainer>
     )
   }

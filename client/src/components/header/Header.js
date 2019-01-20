@@ -23,6 +23,7 @@ export class Header extends PureComponent {
     { route: "/about", label: "About", icon: 'info-circle'},
     { route: "/wallets", label: "Wallets", icon: 'wallet'}
   ];
+
   render() {
     return (
       <Menu 

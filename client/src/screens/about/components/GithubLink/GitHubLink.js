@@ -2,7 +2,6 @@ import React, { PureComponent } from "react";
 import { Icon } from 'antd';
 import styled from "styled-components";
 
-
 const GitHubLabel = styled.a`
   display: flex;
   align-items: center;
@@ -19,7 +18,7 @@ const GitHubLabel = styled.a`
   margin: auto 0 0 0; 
 `
 
-export class GitHubLink extends PureComponent{
+export class GitHubLink extends PureComponent {
   render() {
     return (
       <GitHubLabel href="https://github.com/luanraithz/crypto-foo" rel="noopener noreferrer" target="_blank">

@@ -28,8 +28,13 @@ const StyledRouteContent = styled.div`
 `
 
 class App extends Component {
-  state = {
-    activeRoute: window.location.pathname || '/'
+  
+  constructor(props) {
+    super(props);
+    const { pathname  } = window.location;
+    this.state = {
+      activeRoute: pathname === "/" ? "" : pathname
+    }
   }
 
   routeChanged(activeRoute) {

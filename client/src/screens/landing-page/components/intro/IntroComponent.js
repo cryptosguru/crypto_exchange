@@ -6,7 +6,6 @@ const Intro = styled.div`
   height: 100%;
   background: transparent;
   display: flex;
-  
 `
 export class IntroComponent extends PureComponent {
   render() {

@@ -50,15 +50,24 @@ export class Prices extends Component {
     loadingPriceHistory: false
   };
 
+  constructor(props) {
+    super(props);
+    this.onLoadMore = this.onLoadMore.bind(this);
+    this.renderItem = this.renderItem.bind(this);
+    this.onLoadMoreExchanges = this.onLoadMoreExchanges.bind(this);
+    this.closeDrawer = this.closeDrawer.bind(this);
+  }
+
   componentWillMount() {
     this.search();
   }
 
   search() {
-    this.setState({ loading: true });
-    getTopListBy24Hours(this.state.searchInfo).then(cryptos => {
-      this.setState({ cryptos: this.state.cryptos.concat(cryptos), loading: false});
-    })
+    this.setState({ loading: true }, () => {
+      getTopListBy24Hours(this.state.searchInfo).then(cryptos => {
+        this.setState({ cryptos: this.state.cryptos.concat(cryptos), loading: false});
+      })
+    });
   }
 
   onLoadMore() {
@@ -71,22 +80,18 @@ export class Prices extends Component {
     this.setState({
       drawerVisible: true, activeCoin: item,
       exchangesLoading: true, errorMessage: '', loadingPriceHistory: true
-    },  this.loadExchanges );
+    }, this.loadExchanges);
   }
 
   loadPriceHistory() {
-    this.setState({
-      loadingPriceHistory: true
-    });
+    this.setState({ loadingPriceHistory: true });
     const date = new Date();
 
     getPricesForCharts(new Date(date.setDate(date.getDate() - 6)), this.state.selectedCoinInfo.name).then(({prices}) => {
       this.setState({
-        priceHistory: prices.map(({average, timestamp}) => {
+        priceHistory: prices.map(({ average, timestamp }) => {
           const date = new Date(timestamp);
-          return {
-            y: average, x: `${date.getDate()}/${date.getMonth()}`
-          };
+          return { y: average, x: `${date.getDate()}/${date.getMonth()}` };
         }),
         loadingPriceHistory: false
       })
@@ -103,7 +108,6 @@ export class Prices extends Component {
         exchanges,
         hasMoreExchanges: this.state.exchangesLimit === exchanges.length
       }, this.loadPriceHistory);
-      
     } else {
       switch (errorType) {
         case 'INFO_NOT_FOUND':
@@ -152,7 +156,7 @@ export class Prices extends Component {
   }
 
   loadMore() {
-    return !this.state.loading && ( <LoadMore onClick={this.onLoadMore.bind(this)} /> );
+    return !this.state.loading && ( <LoadMore onClick={this.onLoadMore} /> );
   }
 
   onLoadMoreExchanges() {
@@ -165,10 +169,10 @@ export class Prices extends Component {
         <CryptoCurrencyDrawer 
           visible={this.state.drawerVisible} 
           cryptocurrencyInfo={this.state.selectedCoinInfo} 
-          onClose={() => this.closeDrawer()}
+          onClose={this.closeDrawer}
           exchangesLoading={this.state.exchangesLoading}
           exchanges={this.state.exchanges}
-          onLoadMoreExchanges={() => this.onLoadMoreExchanges()}
+          onLoadMoreExchanges={this.onLoadMoreExchanges}
           hasMoreExchanges={this.state.hasMoreExchanges}
           errorMessage={this.state.errorMessage}
           onOpenExchange={console.log}
@@ -182,7 +186,7 @@ export class Prices extends Component {
             size="small"
             itemLayout="horizontal"
             dataSource={this.state.cryptos}
-            renderItem={this.renderItem.bind(this)}
+            renderItem={this.renderItem}
           />
         </ListWrapper>
       </RouteWrapper>

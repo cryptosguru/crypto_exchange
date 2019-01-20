@@ -29,7 +29,6 @@ export class Exchanges extends PureComponent {
             <ListItem className="exchange" onClick={() => this.props.onClick(item)}>
               <span>{item.name}</span><span title={item.price}>{item.price}</span>
             </ListItem>)}>
-
         </List>
       </Wrapper>
     );

@@ -2,7 +2,6 @@ import React, { PureComponent } from "react";
 import styled from "styled-components";
 import { GitHubLink } from '../GithubLink/GitHubLink';
 
-
 const AboutWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -31,7 +30,6 @@ export class AboutContainer extends PureComponent {
           It consists in a simple project to help with news about cryptocurrencies, last days history,
           exchanges that trade a given cryptocurrency, and wallets with their level of requeriments and facility
           to use.
-
         </Description>
         <GitHubLink/>
       </AboutWrapper>
