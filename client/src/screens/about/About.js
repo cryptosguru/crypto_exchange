@@ -1,8 +1,7 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import styled from "styled-components";
 import RouteWrapper from '../../shared/components/routeWrapper/RouteWrapper';
 import { AboutContainer } from './components/AboutContainer/AboutContainer';
-
 
 const AboutContent = styled.div`
     width: 100%;    
@@ -12,14 +11,11 @@ const AboutContent = styled.div`
     padding-top: 40px;
 `
 
-export class About extends PureComponent {
-    render() {
-        return (
-            <RouteWrapper>
-                <AboutContent>
-                    <AboutContainer title="About"/>
-                </AboutContent>
-            </RouteWrapper>
-        )
-    }
-}
+const About = () =>
+    <RouteWrapper>
+        <AboutContent>
+            <AboutContainer title="About"/>
+        </AboutContent>
+    </RouteWrapper>
+
+export { About }

@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React from "react";
 import styled from 'styled-components';
 import { CryptoFooIntro } from './components/CryptoFooIntro';
 
@@ -7,13 +7,9 @@ const Intro = styled.div`
   background: transparent;
   display: flex;
 `
-export class IntroComponent extends PureComponent {
-  render() {
-    return (
-      <Intro>
-        <CryptoFooIntro/>
-      </Intro>
-    )
-  }
+const IntroComponent = () => 
+  <Intro>
+    <CryptoFooIntro/>
+  </Intro>
 
-}
+export { IntroComponent }

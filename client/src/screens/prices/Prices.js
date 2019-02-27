@@ -35,7 +35,7 @@ const StyledListItem = styled(List.Item)`
 export class Prices extends Component {
   state = { 
     cryptos: [], 
-    loading: false, 
+    loading: true, 
     searchInfo: {
       limit: 10,
       symbol: 'USD',
@@ -58,16 +58,17 @@ export class Prices extends Component {
     this.closeDrawer = this.closeDrawer.bind(this);
   }
 
-  componentWillMount() {
-    this.search();
+  componentDidMount() {
+    this.search()
   }
 
-  search() {
-    this.setState({ loading: true }, () => {
-      getTopListBy24Hours(this.state.searchInfo).then(cryptos => {
-        this.setState({ cryptos: this.state.cryptos.concat(cryptos), loading: false});
-      })
-    });
+  async search() {
+    const cryptos = await getTopListBy24Hours(this.state.searchInfo)
+    this.setState({
+      cryptos: this.state.cryptos.concat(cryptos),
+      loading: false
+    })
+    
   }
 
   onLoadMore() {

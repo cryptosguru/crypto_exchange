@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React from "react";
 import styled from 'styled-components';
 
 const StyledContainer = styled.div`
@@ -20,13 +20,10 @@ const Subtitle = styled(Title)`
   font-size: 35px;
 `
 
-export class CryptoFooIntro extends PureComponent {
-  render() {
-    return (
-      <StyledContainer>
-        <Title>Crypto-Foo</Title>
-        <Subtitle> Cryptocurrency's prices, help and wallets</Subtitle>
-      </StyledContainer>
-    )
-  }
-}
+const CryptoFooIntro = () => 
+  <StyledContainer>
+    <Title>Crypto-Foo</Title>
+    <Subtitle> Cryptocurrency's prices, help and wallets</Subtitle>
+  </StyledContainer>
+
+export { CryptoFooIntro }

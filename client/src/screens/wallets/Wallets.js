@@ -15,12 +15,11 @@ const StyledRoute = styled.div `
 `
 
 export class Wallets extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
       wallets: [],
-      loading: false,
+      loading: true,
       anonymity: "Medium",
       coin: ''
     }
@@ -41,16 +40,10 @@ export class Wallets extends Component {
     });
   }
 
-  componentWillMount() {
-    this.setState({ loading: true }, 
-      async () => {
-        try {
-          const wallets = await getAllWallets();
-          this.setState({ wallets, loading: false })
-        } catch (error) {
-          console.error(error);
-        }
-    });
+  componentDidMount() {
+    getAllWallets()
+      .then(wallets => this.setState({ wallets, loading: false }))
+      .catch(console.error);
   }
 
   render() {

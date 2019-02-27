@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Button } from 'antd';
 
@@ -9,12 +9,10 @@ const StyledLoadMore = styled.div`
   line-height: 32px;
 `
 
-export class LoadMore extends PureComponent {
-  render() {
-    return (
-      <StyledLoadMore>
-        <Button onClick={this.props.onClick}>Load more</Button>
-      </StyledLoadMore>
-    )
-  }
-}
+const LoadMore = ({ onClick }) => 
+  <StyledLoadMore>
+    <Button onClick={onClick}>Load more</Button>
+  </StyledLoadMore>
+
+export { LoadMore }
+  

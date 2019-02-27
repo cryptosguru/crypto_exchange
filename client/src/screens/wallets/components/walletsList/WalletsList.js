@@ -20,7 +20,6 @@ const ListContainer = styled.div`
   border: 1px solid #ebedf0;
 `
 
-
 export class WalletsList extends PureComponent {
   render() {
     return (

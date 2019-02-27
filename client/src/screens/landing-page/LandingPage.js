@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React from "react";
 import styled from "styled-components";
 import { IntroComponent } from './components/intro/IntroComponent';
 import RouteWrapper from '../../shared/components/routeWrapper/RouteWrapper';
@@ -10,15 +10,11 @@ const StyledContent = styled.div`
   flex-direction: column;
 `
 
+const LandingPage = () =>
+  <RouteWrapper>
+    <StyledContent>
+      <IntroComponent/>
+    </StyledContent>
+  </RouteWrapper>
 
-export class LandingPage extends PureComponent {
-  render() {
-    return (
-      <RouteWrapper>
-        <StyledContent>
-          <IntroComponent/>
-        </StyledContent>
-      </RouteWrapper>
-    )
-  }
-}
+export { LandingPage }

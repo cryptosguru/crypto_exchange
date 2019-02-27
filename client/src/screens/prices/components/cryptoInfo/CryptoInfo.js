@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Button } from 'antd';
 
@@ -21,19 +21,15 @@ const StyledInfo = styled.div`
   color: black;
 `
 
-export class CryptoInfo extends PureComponent {
-  render() {
-    const { totalCoinsMined, overviewUrl } = this.props.cryptocurrency;
-    return (
-      <StyledInfoWrapper>
-        <StyledInfo>
-          <Button type="primary" onClick={() => window.open(overviewUrl)}>Overview</Button>
-        </StyledInfo>
-        <StyledInfo>
-          <label>Total coins mined</label>
-          <span>{totalCoinsMined}</span>
-        </StyledInfo>
-      </StyledInfoWrapper>
-    )
-  }
-}
+const CryptoInfo = ({ totalCoinsMined, overviewUrl }) => 
+  <StyledInfoWrapper>
+    <StyledInfo>
+      <Button type="primary" onClick={() => window.open(overviewUrl)}>Overview</Button>
+    </StyledInfo>
+    <StyledInfo>
+      <label>Total coins mined</label>
+      <span>{totalCoinsMined}</span>
+    </StyledInfo>
+  </StyledInfoWrapper>
+
+export { CryptoInfo }

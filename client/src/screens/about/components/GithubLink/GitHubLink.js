@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React from "react";
 import { Icon } from 'antd';
 import styled from "styled-components";
 
@@ -18,13 +18,10 @@ const GitHubLabel = styled.a`
   margin: auto 0 0 0; 
 `
 
-export class GitHubLink extends PureComponent {
-  render() {
-    return (
-      <GitHubLabel href="https://github.com/luanraithz/crypto-foo" rel="noopener noreferrer" target="_blank">
-        Check us out on GitHub!
-        <Icon type="github"/>
-      </GitHubLabel>
-    );
-  }
-}
+const GitHubLink = () =>
+    <GitHubLabel href="https://github.com/luanraithz/crypto-foo" rel="noopener noreferrer" target="_blank">
+      Check us out on GitHub!
+      <Icon type="github"/>
+    </GitHubLabel>
+    
+export { GitHubLink }
